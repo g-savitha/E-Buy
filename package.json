@@ -1,0 +1,24 @@
+{
+  "name": "E-buy",
+  "version": "1.0.0",
+  "description": "E-buy is an ecommerce website built using Vanilla JS",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsavitha95/E-Buy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gsavitha95/E-Buy/issues"
+  },
+  "homepage": "https://github.com/gsavitha95/E-Buy#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
+  }
+}
