@@ -1,6 +1,12 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
+
 const port = 3000 || process.env;
+
+const app = express();
+//globally applies bodyparser middleware to all parts of route handlers.
+//we dont need to pass this as an argument to our route
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send(`
@@ -15,24 +21,7 @@ app.get("/", (req, res) => {
   `);
 });
 
-const bodyparser = (req, res, next) => {
-  if (req.method === "POST") {
-    req.on("data", (data) => {
-      const parsed = data.toString().split("&");
-      const formData = {};
-      for (let pair of parsed) {
-        const [key, value] = pair.split("=");
-        formData[key] = value;
-      }
-      req.body = formData;
-      next();
-    });
-  } else {
-    next();
-  }
-};
-
-app.post("/", bodyparser, (req, res) => {
+app.post("/", (req, res) => {
   console.log(req.body);
   res.send("account created");
 });
