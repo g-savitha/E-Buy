@@ -1,4 +1,5 @@
 const fs = require("fs");
+const crypto = require("crypto");
 const log = console.log;
 
 class UsersRepository {
@@ -10,25 +11,69 @@ class UsersRepository {
       //and also we create instance of this repo only once
       fs.accessSync(this.filename);
     } catch (err) {
-      fs.writeFileSync(this.filename, "hello world");
+      fs.writeFileSync(this.filename, "[]");
     }
   }
+  //getAll users list
   async getAll() {
-    //open the file & read its contents called this.filename
-    const contents = await fs.promises.readFile(this.filename, {
-      encoding: "utf-8",
-    });
-    //parse the json data
-    const data = JSON.parse(contents);
-    //return the parsed data
-    return data;
+    //open the file ,read its contents and parse the data
+    return JSON.parse(
+      await fs.promises.readFile(this.filename, {
+        encoding: "utf-8",
+      })
+    );
+  }
+  //create a user
+  async create(attrs) {
+    attrs.id = this.randomId();
+    const record = await this.getAll();
+    record.push(attrs);
+    await this.writeAll(record);
+  }
+  //write data of all records
+  async writeAll(record) {
+    await fs.promises.writeFile(this.filename, JSON.stringify(record, null, 2));
+  }
+
+  randomId() {
+    return crypto.randomBytes(4).toString("hex");
+  }
+  //get one particular item
+  async getOne(id) {
+    const records = await this.getAll();
+    return records.find((record) => record.id === id);
+  }
+  //delete a record
+  async delete(id) {
+    const records = await this.getAll();
+    const filteredRecords = records.filter((record) => record.id !== id);
+    await this.writeAll(filteredRecords);
+  }
+  //update a record
+  async update(id, attrs) {
+    const records = await this.getAll();
+    const record = records.find((record) => record.id === id);
+    if (!record) {
+      throw new Error(`Record with id ${id} is not found`);
+    }
+
+    Object.assign(record, attrs);
+    await this.writeAll(records);
+  }
+  //get first object based on filters
+  async getOneBy(filters) {
+    const records = await this.getAll();
+
+    for (let record of records) {
+      let found = true;
+      for (let key in filters) {
+        if (record[key] !== filters[key]) found = false;
+      }
+      if (found) {
+        return record;
+      }
+    }
   }
 }
-//an helper function to run await function coz node directly casnt run await fn without async
-const test = async () => {
-  const repo = new UsersRepository("users.json");
-  const users = await repo.getAll();
-  log(users);
-};
 
-test();
+module.exports = new UsersRepository("users.json");
