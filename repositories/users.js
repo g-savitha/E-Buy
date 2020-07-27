@@ -38,16 +38,22 @@ class UsersRepository {
   randomId() {
     return crypto.randomBytes(4).toString("hex");
   }
+  //get one particular item
+  async getOne(id) {
+    const records = await this.getAll();
+    return records.find((record) => record.id === id);
+  }
 }
 //an helper function to run await function coz node directly casnt run await fn without async
 const test = async () => {
   const repo = new UsersRepository("users.json");
-  await repo.create({
-    email: "test@test.com",
-    password: "dfjhdgfjhdg",
-  });
-  const users = await repo.getAll();
-  log(users);
+  // await repo.create({
+  //   email: "test@test.com",
+  //   password: "dfjhdgfjhdg",
+  // });
+  // const users = await repo.getAll();
+  const user = await repo.getOne("12fbcdb1");
+  log(user);
 };
 
 test();
