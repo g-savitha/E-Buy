@@ -30,7 +30,7 @@ class UsersRepository {
     record.push(attrs);
     await this.writeAll(record);
   }
-
+  //write data of all records
   async writeAll(record) {
     await fs.promises.writeFile(this.filename, JSON.stringify(record, null, 2));
   }
@@ -49,6 +49,7 @@ class UsersRepository {
     const filteredRecords = records.filter((record) => record.id !== id);
     await this.writeAll(filteredRecords);
   }
+  //update a record
   async update(id, attrs) {
     const records = await this.getAll();
     const record = records.find((record) => record.id === id);
@@ -74,22 +75,5 @@ class UsersRepository {
     }
   }
 }
-//an helper function to run await function coz node directly casnt run await fn without async
-const test = async () => {
-  const repo = new UsersRepository("users.json");
-  // await repo.create({
-  //   email: "test@test.com",
-  //   password: "dfjhdgfjhdg",
-  // });
-  // const users = await repo.getAll();
-  // const user = await repo.getOne("12fbcdb1");
-  //await repo.delete("12fbcdb1");
-  //await repo.update("ca03c747", { password: "hello123" });
-  const user = await repo.getOneBy({
-    email: "howdy@test.com",
-    password: "hello123",
-  });
-  log(user);
-};
 
-test();
+module.exports = new UsersRepository("users.json");
