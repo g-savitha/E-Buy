@@ -43,6 +43,12 @@ class UsersRepository {
     const records = await this.getAll();
     return records.find((record) => record.id === id);
   }
+  //delete a record
+  async delete(id) {
+    const records = await this.getAll();
+    const filteredRecords = records.filter((record) => record.id !== id);
+    await this.writeAll(filteredRecords);
+  }
 }
 //an helper function to run await function coz node directly casnt run await fn without async
 const test = async () => {
@@ -52,8 +58,8 @@ const test = async () => {
   //   password: "dfjhdgfjhdg",
   // });
   // const users = await repo.getAll();
-  const user = await repo.getOne("12fbcdb1");
-  log(user);
+  // const user = await repo.getOne("12fbcdb1");
+  await repo.delete("12fbcdb1");
 };
 
 test();
