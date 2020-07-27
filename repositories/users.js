@@ -26,7 +26,11 @@ class UsersRepository {
   async create(attrs) {
     const record = await this.getAll();
     record.push(attrs);
-    await fs.promises.writeFile(this.filename, JSON.stringify(record));
+    await this.writeAll(record);
+  }
+
+  async writeAll(record) {
+    await fs.promises.writeFile(this.filename, JSON.stringify(record, null, 2));
   }
 }
 //an helper function to run await function coz node directly casnt run await fn without async
@@ -34,7 +38,7 @@ const test = async () => {
   const repo = new UsersRepository("users.json");
   await repo.create({
     email: "test@test.com",
-    password: "dfdhsfkjhfjkhjfkgfdkhs",
+    password: "dfjhdgfjhdg",
   });
   const users = await repo.getAll();
   log(users);
