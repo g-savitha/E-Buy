@@ -10,23 +10,32 @@ class UsersRepository {
       //and also we create instance of this repo only once
       fs.accessSync(this.filename);
     } catch (err) {
-      fs.writeFileSync(this.filename, "hello world");
+      fs.writeFileSync(this.filename, "[]");
     }
   }
+  //getAll users list
   async getAll() {
-    //open the file & read its contents called this.filename
-    const contents = await fs.promises.readFile(this.filename, {
-      encoding: "utf-8",
-    });
-    //parse the json data
-    const data = JSON.parse(contents);
-    //return the parsed data
-    return data;
+    //open the file ,read its contents and parse the data
+    return JSON.parse(
+      await fs.promises.readFile(this.filename, {
+        encoding: "utf-8",
+      })
+    );
+  }
+  //create a user
+  async create(attrs) {
+    const record = await this.getAll();
+    record.push(attrs);
+    await fs.promises.writeFile(this.filename, JSON.stringify(record));
   }
 }
 //an helper function to run await function coz node directly casnt run await fn without async
 const test = async () => {
   const repo = new UsersRepository("users.json");
+  await repo.create({
+    email: "test@test.com",
+    password: "dfdhsfkjhfjkhjfkgfdkhs",
+  });
   const users = await repo.getAll();
   log(users);
 };
