@@ -59,6 +59,20 @@ class UsersRepository {
     Object.assign(record, attrs);
     await this.writeAll(records);
   }
+  //get first object based on filters
+  async getOneBy(filters) {
+    const records = await this.getAll();
+
+    for (let record of records) {
+      let found = true;
+      for (let key in filters) {
+        if (record[key] !== filters[key]) found = false;
+      }
+      if (found) {
+        return record;
+      }
+    }
+  }
 }
 //an helper function to run await function coz node directly casnt run await fn without async
 const test = async () => {
@@ -70,7 +84,12 @@ const test = async () => {
   // const users = await repo.getAll();
   // const user = await repo.getOne("12fbcdb1");
   //await repo.delete("12fbcdb1");
-  await repo.update("ca03c747", { password: "hello123" });
+  //await repo.update("ca03c747", { password: "hello123" });
+  const user = await repo.getOneBy({
+    email: "howdy@test.com",
+    password: "hello123",
+  });
+  log(user);
 };
 
 test();
