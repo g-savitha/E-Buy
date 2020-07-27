@@ -1,4 +1,5 @@
 const fs = require("fs");
+const crypto = require("crypto");
 const log = console.log;
 
 class UsersRepository {
@@ -24,6 +25,7 @@ class UsersRepository {
   }
   //create a user
   async create(attrs) {
+    attrs.id = this.randomId();
     const record = await this.getAll();
     record.push(attrs);
     await this.writeAll(record);
@@ -31,6 +33,10 @@ class UsersRepository {
 
   async writeAll(record) {
     await fs.promises.writeFile(this.filename, JSON.stringify(record, null, 2));
+  }
+
+  randomId() {
+    return crypto.randomBytes(4).toString("hex");
   }
 }
 //an helper function to run await function coz node directly casnt run await fn without async

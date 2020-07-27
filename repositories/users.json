@@ -1,14 +1,12 @@
 [
   {
-    "email": "hello@test.com",
-    "password": "helloworld"
-  },
-  {
-    "email": "hello@test.com",
-    "password": "helloworld"
+    "email": "test@test.com",
+    "password": "dfjhdgfjhdg",
+    "id": "24523f95"
   },
   {
     "email": "test@test.com",
-    "password": "dfjhdgfjhdg"
+    "password": "dfjhdgfjhdg",
+    "id": "12fbcdb1"
   }
 ]
