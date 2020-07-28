@@ -3,7 +3,7 @@ const crypto = require("crypto");
 const util = require("util");
 //convert scrypt callback based to promise based, to use async-await sytax
 const scrypt = util.promisify(crypto.scrypt);
-const log = console.log;
+const keyLen = 64;
 
 class UsersRepository {
   constructor(filename) {
@@ -32,7 +32,7 @@ class UsersRepository {
     attrs.id = this.randomId();
 
     const salt = crypto.randomBytes(8).toString("hex");
-    const buffer = await scrypt(attrs.password, salt, 64);
+    const buffer = await scrypt(attrs.password, salt, keyLen);
 
     const records = await this.getAll();
     const record = {
@@ -43,6 +43,15 @@ class UsersRepository {
 
     await this.writeAll(records);
     return record;
+  }
+
+  async comparePasswords(saved, supplied) {
+    //saved -> password saved in db. -> hashed.salt
+    //supplied -> password given by user to sign in
+    const [hashed, salt] = saved.split(".");
+    const hashedSuppliedBuf = await scrypt(supplied, salt, keyLen);
+
+    return hashed === hashedSuppliedBuf.toString("hex");
   }
   //write data of all records
   async writeAll(record) {

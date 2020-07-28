@@ -68,17 +68,19 @@ app.get("/signin", (req, res) => {
 app.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   const existingUser = await usersRepo.getOneBy({ email });
+
   if (!existingUser) {
     return res.send("Email not found. Would you like to signup?");
   }
-
-  if (existingUser.password !== password) {
-    return res.send("Invalid password");
-  }
+  const validPassword = await usersRepo.comparePasswords(
+    existingUser.password,
+    password
+  );
+  if (!validPassword) return res.send("Incorrect password");
 
   req.session.userId = existingUser.id;
 
-  res.send(`Hi!, ${existingUser.email} signed in successfully!`);
+  res.send(`Hi!, ${existingUser.email}!`);
 });
 app.listen(port, () => {
   console.log(`listening on port : ${port}`);
