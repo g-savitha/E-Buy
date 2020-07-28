@@ -17,7 +17,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
+app.get("/signup", (req, res) => {
   res.send(`
     <div>
     Your id is : ${req.session.userId}
@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
   `);
 });
 
-app.post("/", async (req, res) => {
+app.post("/signup", async (req, res) => {
   const { email, password, passwordConfirmation } = req.body;
   const existingUser = await usersRepo.getOneBy({ email: email });
   if (existingUser) {
@@ -45,6 +45,40 @@ app.post("/", async (req, res) => {
   req.session.userId = user.id; //req.session is created by cookie session. its an object initially.
 
   res.send("Account created.");
+});
+
+app.get("/signout", (req, res) => {
+  //reset the cookie session
+  req.session = null;
+  res.send("You are logged out!");
+});
+
+app.get("/signin", (req, res) => {
+  res.send(`
+  <div>
+    <form method= "POST">
+        <input name = "email" placeholder="email" type="text" />
+        <input name = "password" placeholder="password" type="password" />
+        <button type="submit">Sign In</button>
+    </form>
+    </div>
+  `);
+});
+
+app.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+  const existingUser = await usersRepo.getOneBy({ email });
+  if (!existingUser) {
+    return res.send("Email not found. Would you like to signup?");
+  }
+
+  if (existingUser.password !== password) {
+    return res.send("Invalid password");
+  }
+
+  req.session.userId = existingUser.id;
+
+  res.send(`Hi!, ${existingUser.email} signed in successfully!`);
 });
 app.listen(port, () => {
   console.log(`listening on port : ${port}`);
