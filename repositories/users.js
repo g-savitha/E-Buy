@@ -1,5 +1,8 @@
 const fs = require("fs");
 const crypto = require("crypto");
+const util = require("util");
+//convert scrypt callback based to promise based, to use async-await sytax
+const scrypt = util.promisify(crypto.scrypt);
 const log = console.log;
 
 class UsersRepository {
@@ -25,11 +28,21 @@ class UsersRepository {
   }
   //create a user
   async create(attrs) {
+    //attrs === {email:'',password:''}
     attrs.id = this.randomId();
-    const record = await this.getAll();
-    record.push(attrs);
-    await this.writeAll(record);
-    return attrs;
+
+    const salt = crypto.randomBytes(8).toString("hex");
+    const buffer = await scrypt(attrs.password, salt, 64);
+
+    const records = await this.getAll();
+    const record = {
+      ...attrs,
+      password: `${buffer.toString("hex")}.${salt}`,
+    };
+    records.push(record);
+
+    await this.writeAll(records);
+    return record;
   }
   //write data of all records
   async writeAll(record) {
