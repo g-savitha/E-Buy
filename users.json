@@ -43,5 +43,15 @@
     "email": "ebuy@ebuy.com",
     "password": "73bc1d101031bf95bc4115606c4a045405b59967c7820aec1f6f96f21909635a4c098609798679411e6eec18eac321bc24113a86386698de4f3b6e8329d485b4.e7f0ac4a40f5b5b2",
     "id": "1ea159f9"
+  },
+  {
+    "email": "local@gmail.com",
+    "password": "f3273666f597e0ca6d4c99c8163d806f8679b42cffe9bb5c6c47326a7d41f245477b88a94b6f8346970fdc07380dd15e8de09193744457f0cf557527fddd5e7b.4c6ba303f0141960",
+    "id": "48be2792"
+  },
+  {
+    "email": "iloveshopping@ebuy.com",
+    "password": "77ca32ace6e7227215f386b57eded6dbafc70a0cd05282d1b5272ff55d9b211253f330c14b171920c79ce5b99b41354b65aaaeb0119fe8def034a12945d69b04.70d01628a45836c5",
+    "id": "5e13cf75"
   }
 ]

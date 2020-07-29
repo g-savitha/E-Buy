@@ -24,5 +24,30 @@ module.exports = {
     .custom((passwordConfirmation, { req }) => {
       if (req.body.password !== passwordConfirmation)
         throw new Error("passwords must match");
+      else return true;
+    }),
+  requireEmailExists: check("email")
+    .trim()
+    .normalizeEmail()
+    .isEmail()
+    .withMessage("Must be a valid email")
+    .custom(async (email) => {
+      const existingUser = await usersRepo.getOneBy({ email });
+      if (!existingUser) {
+        throw new Error("Email not found. Would you like to signup?");
+      }
+    }),
+  requireValidPasswordForUser: check("password")
+    .trim()
+    .custom(async (password, { req }) => {
+      const existingUser = await usersRepo.getOneBy({
+        email: req.body.email,
+      });
+      if (!existingUser) throw new Error("Incorrect password");
+      const validPassword = await usersRepo.comparePasswords(
+        existingUser.password,
+        password
+      );
+      if (!validPassword) throw new Error("Incorrect password");
     }),
 };
