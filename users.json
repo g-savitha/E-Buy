@@ -18,5 +18,40 @@
     "email": "test3@test.com",
     "password": "bea017ed8f36f29750f33fbf890f5248e614c5ca5a4c62d75e8bfc8adf69d30a3dbbeb8aec861b3b4e5fa871dc6de041d7d9de07db0781c242120cf32edce149.48107dc04d6890e9",
     "id": "5b13b9c5"
+  },
+  {
+    "email": "test4@test.com",
+    "password": "30830ebce4e4c2c8da92df57e3db07a990d78b6e9598f40932aab13e101b2de73b9376ef82a0f01ffa63641e4207a5dbea77cdcdea273e2ce9c0d4a298f7a1bb.7931211c81d3f731",
+    "id": "859a8c1a"
+  },
+  {
+    "email": "ebuy@ebuy.com",
+    "password": "cf3b6f4fbdb68beb8335c394f6955d5641e49310e70b33af10e5d2eca71d0f0bc7425f56b69da6acd40148c44f13b3ecaac1d1a86740618e8b009185fd470c87.fe424084efa1be28",
+    "id": "b49b11b2"
+  },
+  {
+    "email": "ebuy@ebuy.com",
+    "password": "716618425adb2f284221897676dfda211fb2acca46d6f7d6c0c6d9e4e46b1c02608259dfd5741b8fe07d13d2de434d50542ae2ffccd2de30b753adf12984ff30.464bfb065c4b4d10",
+    "id": "853f5283"
+  },
+  {
+    "email": "sdsdsadsad@dfdfd.in",
+    "password": "323c8caa2b808bb3f1314730430ed4cc90944c4e24b7c27ed7bd7dc4faae344df1e8f5a377c01ae927e5d474aa7f1fdc44674f3fea60494fd2c0ed5d8ad80c26.14c1df4018ec8e53",
+    "id": "7b1978f8"
+  },
+  {
+    "email": "ebuy@ebuy.com",
+    "password": "73bc1d101031bf95bc4115606c4a045405b59967c7820aec1f6f96f21909635a4c098609798679411e6eec18eac321bc24113a86386698de4f3b6e8329d485b4.e7f0ac4a40f5b5b2",
+    "id": "1ea159f9"
+  },
+  {
+    "email": "local@gmail.com",
+    "password": "f3273666f597e0ca6d4c99c8163d806f8679b42cffe9bb5c6c47326a7d41f245477b88a94b6f8346970fdc07380dd15e8de09193744457f0cf557527fddd5e7b.4c6ba303f0141960",
+    "id": "48be2792"
+  },
+  {
+    "email": "iloveshopping@ebuy.com",
+    "password": "77ca32ace6e7227215f386b57eded6dbafc70a0cd05282d1b5272ff55d9b211253f330c14b171920c79ce5b99b41354b65aaaeb0119fe8def034a12945d69b04.70d01628a45836c5",
+    "id": "5e13cf75"
   }
 ]
