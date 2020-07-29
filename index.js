@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const authRouter = require("./routes/admin/auth");
+const productsRouter = require("./routes/admin/products");
 const port = 3000 || process.env;
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(
   })
 );
 app.use(authRouter);
+app.use(productsRouter);
 
 app.listen(port, () => {
   console.log(`listening on port : ${port}`);
