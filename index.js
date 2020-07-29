@@ -5,6 +5,9 @@ const authRouter = require("./routes/admin/auth");
 const port = 3000 || process.env;
 
 const app = express();
+//express sends these files to be executed by the browser
+//non risky code must be publicized
+app.use(express.static("public"));
 //globally applies bodyparser middleware to all parts of route handlers.
 //we dont need to pass this as an argument to our route
 app.use(bodyParser.urlencoded({ extended: true }));

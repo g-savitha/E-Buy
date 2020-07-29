@@ -23,7 +23,7 @@ module.exports = {
     .withMessage("Must be between 6-20 character length")
     .custom((passwordConfirmation, { req }) => {
       if (req.body.password !== passwordConfirmation)
-        throw new Error("passwords must match");
+        throw new Error("Passwords must match");
       else return true;
     }),
   requireEmailExists: check("email")
@@ -34,7 +34,7 @@ module.exports = {
     .custom(async (email) => {
       const existingUser = await usersRepo.getOneBy({ email });
       if (!existingUser) {
-        throw new Error("Email not found. Would you like to signup?");
+        throw new Error("Email not found.");
       }
     }),
   requireValidPasswordForUser: check("password")
