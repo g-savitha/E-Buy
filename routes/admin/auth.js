@@ -30,7 +30,7 @@ router.post(
     //store id of user inside a user cookie
     req.session.userId = user.id; //req.session is created by cookie session. its an object initially.
 
-    res.send("Account created.");
+    res.redirect("/admin/products");
   }
 );
 
@@ -54,7 +54,7 @@ router.post(
     if (existingUser) {
       req.session.userId = existingUser.id;
 
-      res.send(`Hi!, ${existingUser.email}!`);
+      res.redirect("/admin/products");
     }
   }
 );

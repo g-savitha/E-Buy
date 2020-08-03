@@ -28,9 +28,9 @@ router.post(
     //* multer adds file, files and body object to req
     const image = req.file.buffer.toString("base64");
     const { title, price } = req.body;
-
     await productsRepo.create({ title, price, image });
-    res.send("submitted");
+
+    res.redirect("/admin/products");
   }
 );
 
