@@ -63,10 +63,20 @@ router.post(
     try {
       await productsRepo.update(req.params.id, changes);
     } catch (error) {
-      return res.send("could not find the item");
+      return res.send("Could not find the item");
     }
     res.redirect("/admin/products");
   }
 );
+
+router.post("/admin/products/:id/delete", requireAuth, async (req, res) => {
+  try {
+    await productsRepo.delete(req.params.id);
+  } catch (error) {
+    return res.send("Could not find the item");
+  }
+
+  res.redirect("/admin/products");
+});
 
 module.exports = router;
