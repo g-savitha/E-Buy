@@ -23,6 +23,11 @@ module.exports = ({ product, errors }) => {
           }" required>
           <p class="help is-danger">${getError(errors, "price")}</p>
         </div>
+        <div class="field">
+            <label class="label">Image</label>            
+            <input type="file" name="image" />
+            <p class="help is-danger">${getError(errors, "image")}</p>
+        </div>
         <br />
         <button class="button is-primary">Create</button>
       </form>
