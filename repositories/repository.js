@@ -7,7 +7,7 @@ module.exports = class Repository {
     this.filename = filename;
     try {
       //constructors cant be async in nature and also we dont want to create another method to check for existence of file
-      //and also we create instance of this repo only once
+      // and also we create instance of this repo only once
       fs.accessSync(this.filename);
     } catch (err) {
       fs.writeFileSync(this.filename, "[]");
