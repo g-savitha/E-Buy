@@ -51,7 +51,10 @@ router.post(
   requireAuth,
   upload.single("image"),
   [requireTitle, requirePrice],
-  handleErrors(productsEditTemplate),
+  handleErrors(productsEditTemplate, async (req) => {
+    const product = await productsRepo.getOne(req.params.id);
+    return { product: product };
+  }),
   async (req, res) => {
     const changes = req.body;
     if (req.file) {
@@ -60,10 +63,20 @@ router.post(
     try {
       await productsRepo.update(req.params.id, changes);
     } catch (error) {
-      return res.send("could not find the item");
+      return res.send("Could not find the item");
     }
     res.redirect("/admin/products");
   }
 );
+
+router.post("/admin/products/:id/delete", requireAuth, async (req, res) => {
+  try {
+    await productsRepo.delete(req.params.id);
+  } catch (error) {
+    return res.send("Could not find the item");
+  }
+
+  res.redirect("/admin/products");
+});
 
 module.exports = router;
